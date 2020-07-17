@@ -1,10 +1,13 @@
 import React from 'react';
 import './App.css';
-
+import NavBar from './components/NavBar';
+import SearchBox from './components/SearchBox';
 function App() {
   return (
     <div className="App">
-    <p>Himanshu Toma</p>
+    <h1>Polynomial equation Calculator</h1>
+    <SearchBox/>
+    <NavBar/>
     </div>
   );
 }
