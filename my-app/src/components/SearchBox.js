@@ -1,5 +1,7 @@
 import React from 'react';
 import './SearchBox.css';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
 function SearchBox() {
     const [count, setCount] = React.useState(0);
     const [eq, setEq] = React.useState('');
@@ -13,7 +15,7 @@ function SearchBox() {
             expr: eq
         };
 
-        fetch('http://127.0.0.1:5000/getSolution', {
+        fetch('https://assignment98.herokuapp.com/getSolution', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,9 +30,16 @@ function SearchBox() {
                     setFactor(data.factor);
                     setSolve(data.solve);
                     setExpand(data.expand);
+                    setCount(0);
                 }
-                else
+                else {
                     setOutput('Wrong Input Try again!!!')
+                    setSimplify('');
+                    setFactor('');
+                    setSolve('');
+                    setExpand('');
+                    setCount(1);
+                }
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -46,12 +55,21 @@ function SearchBox() {
                     <i className="fa fa-search"></i>
                 </button>
             </div>
-            <p>{count}</p>
-            <p>Simplify : {simplify}</p>
-            <p>Expand: {expand}</p>
-            <p>Factor : {factor}</p>
-            <p>Solve : {solve}</p>
+            {count === 0 && <div>
+                <p>Simplify : {simplify}</p>
+                <p>Expand: {expand}</p>
+                <p>Factor : {factor}</p>
+                <p>Solve : {solve}</p>
+            </div>}
             <p>{output}</p>
+            <hr/>
+            <Card style={{ width: '18rem' }}>
+                <ListGroup variant="flush">
+                    <ListGroup.Item><u>Examples(try to solve this equation)</u></ListGroup.Item>
+                    <ListGroup.Item>2*x**2+3*x+1</ListGroup.Item>
+                    <ListGroup.Item>(x+y-z)**3</ListGroup.Item>
+                </ListGroup>
+            </Card>
         </div>
     );
 }
